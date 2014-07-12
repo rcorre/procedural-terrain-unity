@@ -8,10 +8,12 @@ public class Tilemap : MonoBehaviour {
     /// </summary>
     public GameObject TileObject;
 
+    public TerrainShaper shaper;
+
     public int NumRows = 10;
     public int NumCols = 10;
 
-    GameObject[,] _tiles;
+    TerrainTile[,] _tiles;
 
     // Use this for initialization
     void Start() {
@@ -29,13 +31,13 @@ public class Tilemap : MonoBehaviour {
 
     public void GenerateTerrain() {
         Clear();
-        _tiles = new GameObject[NumRows, NumCols];
+        _tiles = new TerrainTile[NumRows, NumCols];
         for (int row = 0; row < NumRows; row++) {
             for (int col = 0; col < NumCols; col++) {
                 AddTile(row, col, 0);
             }
         }
-        MakeMountain(10, 10, 5, 1);
+        shaper.Apply(_tiles);
     }
 
     public void Clear() {
@@ -54,21 +56,7 @@ public class Tilemap : MonoBehaviour {
         terrainData.Row = row;
         terrainData.Col = col;
         terrainData.Elevation = elevation;
-        _tiles[row, col] = tile;
+        _tiles[row, col] = terrainData;
     }
 
-    private void MakeMountain(int peakRow, int peakCol, int height, float slope) {
-        int startRow = Mathf.Clamp(peakRow - (int)(height / slope), 0, NumRows);
-        int endRow = Mathf.Clamp(peakRow + (int)(height / slope), 0, NumRows);
-        int startCol = Mathf.Clamp(peakCol - (int)(height / slope), 0, NumCols);
-        int endCol = Mathf.Clamp(peakCol + (int)(height / slope), 0, NumCols);
-        for (int row = 0; row < NumRows; row++) {
-            for (int col = 0; col < NumCols; col++) {
-                float distance = Mathf.Sqrt(Mathf.Pow(row - peakRow, 2) + Mathf.Pow(col - peakCol, 2));
-                int heightAdjustment = Mathf.Max(0, (int)(height - slope * distance)); // no negative adjustments
-                var tile = _tiles[row, col];
-                tile.GetComponent<TerrainTile>().Elevation += heightAdjustment;
-            }
-        }
-    }
 }
