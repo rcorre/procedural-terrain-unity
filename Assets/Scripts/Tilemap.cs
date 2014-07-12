@@ -8,12 +8,12 @@ public class Tilemap : MonoBehaviour {
     /// </summary>
     public GameObject TileObject;
 
-    public List<TerrainShaper> Shapers;
+    public List<Terraformer> Terraformers;
 
     public int NumRows = 10;
     public int NumCols = 10;
 
-    TerrainTile[,] _tiles;
+    private TerrainTile[,] _tiles;
 
     // Use this for initialization
     void Start() {
@@ -37,7 +37,7 @@ public class Tilemap : MonoBehaviour {
                 AddTile(row, col, 0);
             }
         }
-        foreach (var shaper in Shapers) {
+        foreach (var shaper in Terraformers) {
             shaper.Apply(_tiles);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Mountains : TerrainShaper {
+public class Mountains : Terraformer {
     TerrainTile[,] _tiles;
     int _numRows, _numCols;
 
