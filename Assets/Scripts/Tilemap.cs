@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Tilemap : MonoBehaviour {
-    const string TileNameFormat = "Tile<{0},{1}>";
     /// <summary>
     /// tilemap will be constructed from these tiles
     /// </summary>
@@ -47,15 +46,10 @@ public class Tilemap : MonoBehaviour {
     }
 
     private void AddTile(int row, int col, int elevation) {
-        // create a new tile as a subobject of the tilemap
+	// create a tile as a subobject of the tilemap
         var tile = (GameObject)GameObject.Instantiate(TileObject);
-        tile.transform.parent = transform; // tile is a subobject of the Tilemap
-        // position and scale the new tile
-        tile.transform.localScale = new Vector3(tileSizeX, (elevation + 1) * tileSizeY, tileSizeZ);
-        tile.transform.position = new Vector3(col * tileSizeX, 0, row * tileSizeZ);
-        // give it a name for convenience
-        tile.name = string.Format(TileNameFormat, row, col);
-        // tell tile script its position within the tilemap
+        tile.transform.parent = transform;
+	// set the row, column, and elevation of the tile
         var terrainData = tile.GetComponent<TerrainTile>();
         terrainData.Row = row;
         terrainData.Col = col;
@@ -73,8 +67,7 @@ public class Tilemap : MonoBehaviour {
                 float distance = Mathf.Sqrt(Mathf.Pow(row - peakRow, 2) + Mathf.Pow(col - peakCol, 2));
                 int heightAdjustment = Mathf.Max(0, (int)(height - slope * distance)); // no negative adjustments
                 var tile = _tiles[row, col];
-		var oldHeight = tile.transform.localScale.y;
-		tile.transform.localScale = new Vector3(tileSizeX, oldHeight + tileSizeY * heightAdjustment, tileSizeZ);
+                tile.GetComponent<TerrainTile>().Elevation += heightAdjustment;
             }
         }
     }
