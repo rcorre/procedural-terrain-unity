@@ -11,14 +11,4 @@ public abstract class TerrainShaper : MonoBehaviour {
     public float Density;
 
     public abstract void Apply(TerrainTile[,] tiles);
-
-    // Use this for initialization
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 }

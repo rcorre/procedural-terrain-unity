@@ -13,6 +13,7 @@ public class Mountains : TerrainShaper {
     }
 
     private void MakeMountain(int peakRow, int peakCol, int height, float slope) {
+        Debug.Log(string.Format("{0} making mountain at {1}, {2}. h={3}, s={4}", name, peakCol, peakRow, height, slope));
         int startRow = Mathf.Clamp(peakRow - (int)(height / slope), 0, _numRows);
         int endRow = Mathf.Clamp(peakRow + (int)(height / slope), 0, _numRows);
         int startCol = Mathf.Clamp(peakCol - (int)(height / slope), 0, _numCols);

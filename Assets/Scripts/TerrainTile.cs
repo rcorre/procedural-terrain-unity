@@ -6,10 +6,14 @@ public class TerrainTile : MonoBehaviour {
     private int _elevation;
     private int _row, _col;
 
+    float _sizeX, _sizeY, _sizeZ;
 
-    public float SizeX { get { return transform.localScale.x; } }
-    public float SizeY { get { return transform.localScale.y; } }
-    public float SizeZ { get { return transform.localScale.z; } }
+    public void Initialize() {
+        var scale = transform.localScale;
+        _sizeX = scale.x;
+        _sizeY = scale.y;
+        _sizeZ = scale.z;
+    }
 
     /// <summary>
     /// Row within containing tilemap
@@ -18,7 +22,7 @@ public class TerrainTile : MonoBehaviour {
         get { return _row; }
         set {
             _row = value;
-            transform.localPosition = new Vector3(_col * SizeX, 0, _row * SizeZ);
+            transform.localPosition = new Vector3(_col * _sizeX, 0, _row * _sizeZ);
             EvaluatePosition();
         }
     }
@@ -38,22 +42,12 @@ public class TerrainTile : MonoBehaviour {
         get { return _elevation; }
         set {
             _elevation = value;
-            transform.localScale = new Vector3(SizeX, (value + 1) * SizeY, SizeZ);
+            transform.localScale = new Vector3(_sizeX, (value + 1) * _sizeY, _sizeZ);
         }
     }
 
     void EvaluatePosition() {
-        transform.localPosition = new Vector3(_col * SizeX, 0, _row * SizeZ);
+        transform.localPosition = new Vector3(_col * _sizeX, 0, _row * _sizeZ);
         name = string.Format(TileNameFormat, _row, _col);
-    }
-
-    // Use this for initialization
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 }

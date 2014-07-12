@@ -8,7 +8,7 @@ public class Tilemap : MonoBehaviour {
     /// </summary>
     public GameObject TileObject;
 
-    public TerrainShaper shaper;
+    public List<TerrainShaper> Shapers;
 
     public int NumRows = 10;
     public int NumCols = 10;
@@ -37,7 +37,9 @@ public class Tilemap : MonoBehaviour {
                 AddTile(row, col, 0);
             }
         }
-        shaper.Apply(_tiles);
+        foreach (var shaper in Shapers) {
+            shaper.Apply(_tiles);
+        }
     }
 
     public void Clear() {
@@ -53,6 +55,7 @@ public class Tilemap : MonoBehaviour {
         tile.transform.parent = transform;
 	// set the row, column, and elevation of the tile
         var terrainData = tile.GetComponent<TerrainTile>();
+        terrainData.Initialize();
         terrainData.Row = row;
         terrainData.Col = col;
         terrainData.Elevation = elevation;
