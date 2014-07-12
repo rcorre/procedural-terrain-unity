@@ -13,7 +13,7 @@ public class Mountains : TerrainShaper {
 	int maxRow = Mathf.Min(_numRows, Row + Range);
 	int minCol = Mathf.Max(0, Col - Range);
 	int maxCol = Mathf.Min(_numRows, Col + Range);
-        int nMountains = (int)(Density * tiles.LongLength);
+        int nMountains = (int)(Density * Range * Range);
         for (int i = 0; i < nMountains; i++) {
             int row = Random.Range(minRow, maxRow);
             int col = Random.Range(minCol, maxCol);
