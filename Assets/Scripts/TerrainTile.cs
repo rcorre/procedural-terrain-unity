@@ -65,7 +65,9 @@ public class TerrainTile : MonoBehaviour {
         get { return _unitOnTile; }
         set {
             _unitOnTile = value;
-            _unitOnTile.CurrentTile = this;
+            if (_unitOnTile != null) {
+                _unitOnTile.CurrentTile = this;
+            }
         }
     }
 
