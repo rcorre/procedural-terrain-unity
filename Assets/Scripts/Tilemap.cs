@@ -43,7 +43,12 @@ public class Tilemap : MonoBehaviour {
     }
 
     public void Clear() {
+	// destroy all tile objects
         foreach (var tile in GetComponentsInChildren<TerrainTile>()) {
+            DestroyImmediate(tile.gameObject);
+        }
+	// destroy all unit objects
+        foreach (var tile in GetComponentsInChildren<BasicUnit>()) {
             DestroyImmediate(tile.gameObject);
         }
         _tiles = null;
