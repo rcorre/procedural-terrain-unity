@@ -13,7 +13,7 @@ public class PlaceObstacles : Terraformer {
         int minRow = Mathf.Max(0, Row - Range);
         int maxRow = Mathf.Min(_numRows, Row + Range);
         int minCol = Mathf.Max(0, Col - Range);
-        int maxCol = Mathf.Min(_numRows, Col + Range);
+        int maxCol = Mathf.Min(_numCols, Col + Range);
         int nSplotches = (int)(Density * Range * Range);
         for (int i = 0; i < nSplotches; i++) {
             int row = Random.Range(minRow, maxRow);

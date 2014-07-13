@@ -200,14 +200,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e358546e15b54141a85c8cf26177f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Row: 29
-  Col: 0
+  Row: 15
+  Col: 25
   Range: 10
-  Density: .0199999996
+  Density: .0299999993
   WallPrefab: {fileID: 11400000, guid: 48be752704f49e5408d49e501ad18f5b, type: 2}
-  BuildingSize: 5
-  FlattenTerrain: 1
-  DestroyObstacles: 1
+  BuildingSize: 6
+  EnableTerrainFlattening: 1
+  EnableObstacleDestruction: 1
 --- !u!1 &884376094
 GameObject:
   m_ObjectHideFlags: 0
