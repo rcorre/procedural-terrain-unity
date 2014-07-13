@@ -1,6 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
+[Flags] 
+public enum Direction {
+    North = 0, // points toward positive z
+    East  = 1, // points toward positive x
+    South = 2, // points toward negative z
+    West  = 4, // points toward negative x
+}
 
 public class Tilemap : MonoBehaviour {
     /// <summary>
