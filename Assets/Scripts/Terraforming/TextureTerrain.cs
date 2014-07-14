@@ -5,6 +5,7 @@ public class TextureTerrain : Terraformer {
     TerrainTile[,] _tiles;
     int _numRows, _numCols;
     public Material TerrainMaterial;
+    public int MoveCost = 10;
 
     public override void Apply(TerrainTile[,] tiles) {
         _tiles = tiles;
@@ -34,7 +35,7 @@ public class TextureTerrain : Terraformer {
             int endCol = Mathf.Clamp(centerCol + width, 0, _numCols);
             for (int col = startCol; col < endCol; col++) {
                 var tile = _tiles[row, col];
-                tile.gameObject.renderer.material = TerrainMaterial;
+                tile.SetTerrain(MoveCost, TerrainMaterial);
             }
         }
     }

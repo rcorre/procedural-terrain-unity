@@ -3,9 +3,11 @@ using System.Collections;
 
 public class TerrainTile : MonoBehaviour {
     const string TileNameFormat = "Tile<{0},{1}>";
+    public bool WasTerrainApplied { get; private set; }
     private int _elevation;
     private int _row, _col;
     private BasicUnit _unitOnTile;
+    public int MoveCost { get; private set; }
 
     float _sizeX, _sizeY, _sizeZ;
 
@@ -14,6 +16,12 @@ public class TerrainTile : MonoBehaviour {
         _sizeX = scale.x;
         _sizeY = scale.y;
         _sizeZ = scale.z;
+    }
+
+    public void SetTerrain(int moveCost, Material terrainMaterial) {
+        gameObject.renderer.material = terrainMaterial;
+        MoveCost = moveCost;
+	WasTerrainApplied = true;
     }
 
     /// <summary>
