@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class BasicUnit : MonoBehaviour {
+    public bool Impassable = true;
     private TerrainTile _currentTile;
 
     public TerrainTile CurrentTile {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-struct Coordinate {
+public struct Coordinate {
     public int row, col;
 
     public Coordinate(int row, int col) {

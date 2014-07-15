@@ -34,9 +34,7 @@ public class Tilemap : MonoBehaviour {
 
     }
 
-    private float tileSizeX { get { return TileObject.transform.localScale.x; } }
-    private float tileSizeY { get { return TileObject.transform.localScale.y; } }
-    private float tileSizeZ { get { return TileObject.transform.localScale.z; } }
+    public Vector3 TileSize { get { return TileObject.transform.localScale; } }
 
     public void GenerateTerrain() {
         Clear();
@@ -49,6 +47,10 @@ public class Tilemap : MonoBehaviour {
         foreach (var shaper in Terraformers) {
             shaper.Apply(_tiles);
         }
+    }
+
+    public TerrainTile TileAt(int row, int col) {
+        return _tiles[row, col];
     }
 
     public void Clear() {
