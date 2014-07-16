@@ -3,22 +3,23 @@ using System.Collections;
 using System.Linq;
 
 public class BattleController : MonoBehaviour {
-    public int PhaseTimeMs = 30;
-    private float _phaseTimer;
+    public float PhaseTime = 1.0f; // time in seconds to wait between phases
+    private float _phaseTimer;     // times wait between phases
     Actor[] _allUnits;
     Actor _activeUnit;
 
     // Use this for initialization
     void Start() {
         _allUnits = GameObject.FindObjectsOfType<Actor>();
+	_phaseTimer = PhaseTime;
     }
 
     // Update is called once per frame
     void Update() {
         if (_activeUnit) {
-            Debug.Log("Unit Ready: " + _activeUnit.name);
+
         }
-        else {
+        else { // no unit is active, pass phases until one is ready
             _activeUnit = PassTimeUntilUnitReady();
         }
     }
@@ -33,7 +34,7 @@ public class BattleController : MonoBehaviour {
         _phaseTimer -= Time.deltaTime;
         if (_phaseTimer < 0) {
             Debug.Log("A phase passes");
-            _phaseTimer = PhaseTimeMs;
+            _phaseTimer = PhaseTime;
             foreach (var unit in _allUnits) {
                 unit.PassPhase();
             }
