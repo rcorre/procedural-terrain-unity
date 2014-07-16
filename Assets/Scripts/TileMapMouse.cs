@@ -1,21 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(TerrainTile))]
+[RequireComponent(typeof(Tilemap))]
 public class TileMapMouse : MonoBehaviour {
-    TileSelector _tileSelector;
+    public TileSelector TileSelector;
+    Tilemap _tileMap;
 
     void Start() {
-        _tileSelector = Component.FindObjectOfType<TileSelector>();
+        _tileMap = GetComponent<Tilemap>();
     }
 
-    // Update is called once per frame
+    // check every tile in the tilemap for a collision with a ray sent from the mouse position relative to the camera
+    // place the selector on the closest tile
     void Update() {
+        TerrainTile closestTileUnderMouse = null;
+        float minDistance = float.MaxValue;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-
-        if (collider.Raycast(ray, out hitInfo, Mathf.Infinity)) {
-            _tileSelector.SelectedTile = GetComponent<TerrainTile>();
+        for (int row = 0; row < _tileMap.NumRows; row++) {
+            for (int col = 0; col < _tileMap.NumCols; col++) {
+                TerrainTile tile = _tileMap.TileAt(row, col);
+                if (tile.collider.Raycast(ray, out hitInfo, Mathf.Infinity)) {
+                    if (hitInfo.distance < minDistance) {
+                        minDistance = hitInfo.distance;
+                        closestTileUnderMouse = tile;
+                    }
+                }
+            }
         }
+        TileSelector.TileUnderMouse = closestTileUnderMouse;
     }
 }

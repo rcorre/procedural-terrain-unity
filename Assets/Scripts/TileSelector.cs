@@ -2,13 +2,19 @@
 using System.Collections;
 
 public class TileSelector : MonoBehaviour {
-    private TerrainTile TileUnderMouse;
+    private TerrainTile _tileUnderMouse;
 
-    public TerrainTile SelectedTile {
-        get { return TileUnderMouse; }
+    public TerrainTile TileUnderMouse {
+        get { return _tileUnderMouse; }
         set {
-            TileUnderMouse = value;
-	    transform.position = TileUnderMouse.SurfaceCenter;
+            if (value) { // place tile selector on a tile
+                gameObject.SetActive(true);
+                _tileUnderMouse = value;
+                transform.position = _tileUnderMouse.SurfaceCenter;
+            }
+            else { // indicates no tile is under mouse -- hide selector
+                gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -717,6 +717,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1676434200}
   - 114: {fileID: 1676434201}
+  - 114: {fileID: 1676434202}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Map
@@ -761,6 +762,18 @@ MonoBehaviour:
   - {fileID: 1316325204}
   NumRows: 30
   NumCols: 30
+--- !u!114 &1676434202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1676434199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16a804e1bda8694b89b161d37b9c8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TileSelector: {fileID: 1123055321}
 --- !u!1 &1736945328
 GameObject:
   m_ObjectHideFlags: 0
