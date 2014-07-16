@@ -2,13 +2,13 @@
 using System.Collections;
 
 public class TileSelector : MonoBehaviour {
-    private TerrainTile _selectedTile;
+    private TerrainTile TileUnderMouse;
 
     public TerrainTile SelectedTile {
-        get { return _selectedTile; }
+        get { return TileUnderMouse; }
         set {
-            _selectedTile = value;
-            transform.position = _selectedTile.SurfaceCenter;
+            TileUnderMouse = value;
+	    transform.position = TileUnderMouse.SurfaceCenter;
         }
     }
 }

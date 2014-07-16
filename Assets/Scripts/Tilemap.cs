@@ -25,8 +25,8 @@ public class Tilemap : MonoBehaviour {
     private TerrainTile[,] _tiles;
 
     // Use this for initialization
-    void Start() {
-
+    void Awake() {
+        GenerateTerrain();
     }
 
     // Update is called once per frame
