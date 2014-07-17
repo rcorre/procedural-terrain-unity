@@ -3,11 +3,24 @@ using System.Collections;
 
 public class TerrainTile : MonoBehaviour {
     const string TileNameFormat = "Tile<{0},{1}>";
+    const int ImpassableCost = 9999;
     public bool WasTerrainApplied { get; private set; }
     private int _elevation;
     private int _row, _col;
     private BasicUnit _unitOnTile;
-    public int MoveCost { get; private set; }
+    private int _moveCost = 10;
+
+    public int MoveCost {
+        get {
+            if (_unitOnTile && _unitOnTile.Impassable) {
+                return ImpassableCost;
+            }
+            return _moveCost;
+        }
+        private set {
+            _moveCost = value;
+        }
+    }
 
     float _sizeX, _sizeY, _sizeZ;
 
@@ -21,7 +34,7 @@ public class TerrainTile : MonoBehaviour {
     public void SetTerrain(int moveCost, Material terrainMaterial) {
         gameObject.renderer.material = terrainMaterial;
         MoveCost = moveCost;
-	WasTerrainApplied = true;
+        WasTerrainApplied = true;
     }
 
     /// <summary>

@@ -106,7 +106,7 @@ MonoBehaviour:
   Range: 12
   Density: .300000012
   TerrainMaterial: {fileID: 2100000, guid: 94441202e9ddf6a4ab778c97ca61f3d2, type: 2}
-  MoveCost: 10
+  MoveCost: 20
 --- !u!4 &144807681
 Transform:
   m_ObjectHideFlags: 0
@@ -491,6 +491,10 @@ MonoBehaviour:
   StartRow: 10
   StartCol: 10
   Initiative: 50
+  MaxHealth: 100
+  Damage: 40
+  AttackRange: 1
+  AttackAPCost: 40
 --- !u!23 &1342055173
 Renderer:
   m_ObjectHideFlags: 0
@@ -703,7 +707,7 @@ MonoBehaviour:
   Range: 10
   Density: .400000006
   TerrainMaterial: {fileID: 2100000, guid: fe9cc2d07b1ae7948b040b750f24b8e2, type: 2}
-  MoveCost: 10
+  MoveCost: 30
 --- !u!1 &1662462220
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,8 +735,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9278717333b2b46834e225c8bcca5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Row: 15
-  Col: 29
+  Row: 29
+  Col: 0
   Range: 12
   Density: .0799999982
 --- !u!4 &1662462222
