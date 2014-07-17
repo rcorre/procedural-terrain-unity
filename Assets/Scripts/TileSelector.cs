@@ -8,6 +8,7 @@ using System.Collections;
 // and provide access to tileundermouse
 public class TileSelector : MonoBehaviour {
     private TerrainTile _tileUnderMouse;
+    private BattleController _controller; // controller to send notifications to
 
     public TerrainTile TileUnderMouse {
         get { return _tileUnderMouse; }
@@ -20,6 +21,19 @@ public class TileSelector : MonoBehaviour {
             else { // indicates no tile is under mouse -- hide selector
                 gameObject.SetActive(false);
             }
+        }
+    }
+
+    void Start() {
+        _controller = GameObject.FindObjectOfType<BattleController>();
+        if (!_controller) { 
+            Debug.LogError("TileSelector could not find a BattleController to send mouse notifications to"); 
+        }
+    }
+
+    void Update() {
+        if (Input.GetMouseButtonUp(0)) {
+            _controller.HandleTileClick(TileUnderMouse);
         }
     }
 }

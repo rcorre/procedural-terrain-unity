@@ -13,6 +13,9 @@ public class BasicUnit : MonoBehaviour {
         }
     }
 
+    public int Row { get { return CurrentTile.Row; } }
+    public int Col { get { return CurrentTile.Col; } }
+
     /* For debugging object base positions
     void OnDrawGizmosSelected() {
         MeshFilter mf = GetComponent<MeshFilter>();
