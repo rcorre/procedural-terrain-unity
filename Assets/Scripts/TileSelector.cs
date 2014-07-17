@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// TODO: This shouldn't be a separate class/object
+// have TileMapMouse handle this
+// it should have a prefab used to create selector
+// as well as prefabs for move/attack range, ect
+// and provide access to tileundermouse
 public class TileSelector : MonoBehaviour {
     private TerrainTile _tileUnderMouse;
 

@@ -21,7 +21,6 @@ public class PathFinder : MonoBehaviour {
         distance[startIndex] = 0;
 
         var parent = new int[numNodes];
-        var visited = new bool[numNodes];
 
         var queue = new List<int>();
         queue.Add(startIndex);
