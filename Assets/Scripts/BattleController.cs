@@ -7,17 +7,24 @@ public class BattleController : MonoBehaviour {
     private float _phaseTimer;     // times wait between phases
     Actor[] _allUnits;
     Actor _activeUnit;
+    PathFinder _pathFinder;
+    TerrainTile[] _tilesInRange;
 
     // Use this for initialization
     void Start() {
         _allUnits = GameObject.FindObjectsOfType<Actor>();
 	_phaseTimer = PhaseTime;
+	_pathFinder = GameObject.FindObjectOfType<PathFinder>();
     }
 
     // Update is called once per frame
     void Update() {
         if (_activeUnit) {
-
+            if (Input.GetKeyUp(KeyCode.W)) {
+                _tilesInRange = _pathFinder.TilesInMoveRange(_activeUnit.CurrentTile.Row, _activeUnit.CurrentTile.Col, _activeUnit.AP);
+                var highlighter = GameObject.FindObjectOfType<TileHighlight>();
+                highlighter.HighlightTiles(_tilesInRange);
+            }
         }
         else { // no unit is active, pass phases until one is ready
             _activeUnit = PassTimeUntilUnitReady();

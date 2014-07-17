@@ -5,12 +5,13 @@ public class Actor : BasicUnit {
     public const int MaxAp = 100;
 
     public int StartRow, StartCol;
-    public int AP;
     public int Initiative;
+
+    public int AP { get; private set; }
 
     // Use this for initialization
     void Start() {
-        var tileMap = GameObject.FindObjectOfType<Tilemap>();
+        var tileMap = GameObject.FindObjectOfType<TileMap>();
         CurrentTile = tileMap.TileAt(StartRow, StartCol);
     }
 

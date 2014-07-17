@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Tilemap))]
+[RequireComponent(typeof(TileMap))]
 public class TileMapMouse : MonoBehaviour {
     public TileSelector TileSelector;
-    Tilemap _tileMap;
+    TileMap _tileMap;
 
     void Start() {
-        _tileMap = GetComponent<Tilemap>();
+        _tileMap = GetComponent<TileMap>();
     }
 
     // check every tile in the tilemap for a collision with a ray sent from the mouse position relative to the camera

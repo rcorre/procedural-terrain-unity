@@ -11,7 +11,7 @@ public enum Direction {
     West  = 4, // points toward negative x
 }
 
-public class Tilemap : MonoBehaviour {
+public class TileMap : MonoBehaviour {
     /// <summary>
     /// tilemap will be constructed from these tiles
     /// </summary>
@@ -51,6 +51,19 @@ public class Tilemap : MonoBehaviour {
 
     public TerrainTile TileAt(int row, int col) {
         return _tiles[row, col];
+    }
+
+    public TerrainTile[] TileNeighbors(int row, int col) {
+        List<TerrainTile> neighbors = new List<TerrainTile>();
+        if (row > 0) { neighbors.Add(_tiles[row - 1, col]); }
+        if (col > 0) { neighbors.Add(_tiles[row, col - 1]); }
+        if (row < NumRows - 1) { neighbors.Add(_tiles[row + 1, col]); }
+        if (col < NumCols - 1) { neighbors.Add(_tiles[row, col + 1]); }
+        return neighbors.ToArray();
+    }
+
+    public TerrainTile[] TileNeighbors(TerrainTile tile) {
+        return TileNeighbors(tile.Row, tile.Col);
     }
 
     public void Clear() {

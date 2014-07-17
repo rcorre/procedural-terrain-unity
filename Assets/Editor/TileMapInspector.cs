@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(Tilemap))]
+[CustomEditor(typeof(TileMap))]
 public class TileMapInspector : Editor {
     float value = 0.5f;
     /// <summary>
@@ -11,12 +11,12 @@ public class TileMapInspector : Editor {
     public override void OnInspectorGUI() {
         DrawDefaultInspector();
         if (GUILayout.Button("regenerate")) {
-            Tilemap tileMap = (Tilemap)target;
+            TileMap tileMap = (TileMap)target;
             tileMap.GenerateTerrain();
         }
 
         if (GUILayout.Button("clear")) {
-            Tilemap tileMap = (Tilemap)target;
+            TileMap tileMap = (TileMap)target;
             tileMap.Clear();
         }
 
