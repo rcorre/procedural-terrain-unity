@@ -32,7 +32,7 @@ public class TileSelector : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && _tileUnderMouse) {
             _controller.HandleTileClick(TileUnderMouse);
         }
     }

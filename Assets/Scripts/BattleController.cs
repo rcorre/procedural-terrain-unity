@@ -126,11 +126,31 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState HandleTileClick(TerrainTile tile) {
-            return null; // TODO : move to clicked tile if it is in range
+            if (_tilesInRange.Contains(tile)) {
+                return new MoveUnit(_actor, tile);
+            }
+            return null;
         }
 
         public override void OnExit() {
             _highlighter.ClearOverlay();
+        }
+    }
+
+    /// <summary>
+    /// A unit is in the process of moving along the tilemap
+    /// </summary>
+    private class MoveUnit : BattleState {
+        Actor _actor;
+        TerrainTile _destination;
+        public MoveUnit(Actor unitToMove, TerrainTile destination) {
+            _actor = unitToMove;
+            _destination = destination;
+        }
+
+        public override BattleState Update() {
+            _actor.CurrentTile = _destination;  // TODO: animate movement
+            return new PlayerReady(_actor);
         }
     }
 }
