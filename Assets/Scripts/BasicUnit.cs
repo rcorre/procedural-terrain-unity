@@ -2,9 +2,14 @@
 using System.Collections;
 
 public class BasicUnit : MonoBehaviour {
+    // editable
     public bool Impassable = true;
+    public int MaxHealth = 100;
+    public int DamageResistance = 10;
+
     private TerrainTile _currentTile;
 
+    public int Health { get; protected set; }
     public TerrainTile CurrentTile {
         get { return _currentTile; }
         set {
@@ -16,15 +21,9 @@ public class BasicUnit : MonoBehaviour {
     public int Row { get { return CurrentTile.Row; } }
     public int Col { get { return CurrentTile.Col; } }
 
-    /* For debugging object base positions
-    void OnDrawGizmosSelected() {
-        MeshFilter mf = GetComponent<MeshFilter>();
-        Vector3 objSize = mf.sharedMesh.bounds.size;
-        Vector3 objScale = transform.localScale;
-        float height = objSize.y * objScale.y / 2;
-	Gizmos.DrawSphere(transform.position - Vector3.up * height, 0.2f);
+    void Start() {
+        Health = MaxHealth;
     }
-    */
 
     private void CenterOnTile(TerrainTile tile) {
 	// find the bounds of the object using its mesh filter
@@ -34,5 +33,14 @@ public class BasicUnit : MonoBehaviour {
         float height = objSize.y * objScale.y;
 	// position the base on the surface of the tile
         transform.position = tile.SurfaceCenter + new Vector3(0, height / 2, 0);
+    }
+
+    public virtual int DealDamage(int amount) {
+        var result = Mathf.Max(amount - DamageResistance, 0);
+        Health -= amount;
+        if (Health <= 0) {
+            Destroy(gameObject); // TODO: handle this better - could cause issues instantly destroying
+        }
+        return result;
     }
 }

@@ -7,7 +7,6 @@ public class Actor : BasicUnit {
     public int StartRow, StartCol;
     // stats -- TODO: can these be settable only in the editor? custom inspector maybe?
     public int Initiative = 20;
-    public int MaxHealth = 100;
     public int Damage = 40;
     public int AttackRange = 1;
     public int AttackAPCost = 40;
@@ -17,7 +16,11 @@ public class Actor : BasicUnit {
     // Use this for initialization
     void Start() {
         var tileMap = GameObject.FindObjectOfType<TileMap>();
-        CurrentTile = tileMap.TileAt(StartRow, StartCol);
+        if (tileMap.TileAt(StartRow, StartCol).UnitOnTile) {
+            Debug.LogError("Cannot place unit on object");
+        }
+        tileMap.TileAt(StartRow, StartCol).UnitOnTile = this;
+        Health = MaxHealth;
     }
 
     // Update is called once per frame
