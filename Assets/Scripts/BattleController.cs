@@ -211,7 +211,10 @@ public class BattleController : MonoBehaviour {
 
         public override BattleState Update() {
             var targetUnit = _targetTile.UnitOnTile;
+            var position = targetUnit.transform.position;
             var damageDealt = targetUnit.DealDamage(_attacker.Damage);
+            var textManager = FindObjectOfType<BattleTextManager>();
+            textManager.SpawnText(damageDealt, BattleTextManager.TextType.Damage, position);
             return new PlayerReady(_attacker);
         }
     }
