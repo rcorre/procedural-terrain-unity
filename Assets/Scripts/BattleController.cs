@@ -105,10 +105,10 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState Update() {
-            if (Input.GetKeyUp(KeyCode.W)) {
+            if (Input.GetKeyUp(KeyCode.M)) {
                 return new PlayerConsiderMove(_actor);
             }
-            else if (Input.GetKeyUp(KeyCode.A)) {
+            else if (Input.GetKeyUp(KeyCode.N)) {
                 return new PlayerConsiderAttack(_actor);
             }
             return null;
@@ -132,10 +132,10 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState Update() {
-            if (Input.GetKeyUp(KeyCode.W)) { // stop movement selection
+            if (Input.GetKeyUp(KeyCode.M)) { // stop movement selection
                 return new PlayerReady(_actor);
             }
-            if (Input.GetKeyUp(KeyCode.A)) { // stop movement selection
+            if (Input.GetKeyUp(KeyCode.N)) { // stop movement selection
                 return new PlayerConsiderAttack(_actor);
             }
             return null;
@@ -197,10 +197,10 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState Update() {
-            if (Input.GetKeyUp(KeyCode.A)) { // stop movement selection
+            if (Input.GetKeyUp(KeyCode.N)) { // stop movement selection
                 return new PlayerReady(_actor);
             }
-            if (Input.GetKeyUp(KeyCode.W)) { // stop movement selection
+            if (Input.GetKeyUp(KeyCode.M)) { // stop movement selection
                 return new PlayerConsiderMove(_actor);
             }
             return null;
