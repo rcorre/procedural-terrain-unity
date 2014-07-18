@@ -10,7 +10,7 @@ public class TileOverlay : MonoBehaviour {
 
     public GameObject MovementOverlay;
     public GameObject AttackOverlay;
-    public GameObject WalkIcon;
+    public GameObject WalkIcon, MeleeIcon, RangedIcon;
 
     private List<GameObject> _currentOverlay = new List<GameObject>();
     private GameObject _mouseIcon;

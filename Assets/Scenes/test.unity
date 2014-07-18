@@ -149,6 +149,8 @@ MonoBehaviour:
   MovementOverlay: {fileID: 100000, guid: bc844f9c14183c64e9e2dd16a31cf0f0, type: 2}
   AttackOverlay: {fileID: 100000, guid: 3efe628e54d80bb42aa72dc34fd7cfad, type: 2}
   WalkIcon: {fileID: 100000, guid: b10554f5c07e92443af499d98036a206, type: 2}
+  MeleeIcon: {fileID: 0}
+  RangedIcon: {fileID: 0}
 --- !u!4 &457452804
 Transform:
   m_ObjectHideFlags: 0
