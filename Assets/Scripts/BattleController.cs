@@ -30,6 +30,10 @@ public class BattleController : MonoBehaviour {
         }
     }
 
+    public void HandleTileHover(TerrainTile tile) {
+	_state.HandleTileHover(tile);
+    }
+
     /// <summary>
     /// represents a state of the battle controller
     /// </summary>
@@ -45,6 +49,12 @@ public class BattleController : MonoBehaviour {
 	/// <param name="tile"></param>
 	/// <returns>a new state if a state change is desired, otherwise null</returns>
         public virtual BattleState HandleTileClick(TerrainTile tile) { return null; }
+	/// <summary>
+	/// handle a tile click hover within this state
+	/// </summary>
+	/// <param name="tile">tile that mouse is hovering over</param>
+	/// <returns>a new state if a state change is desired, otherwise null</returns>
+        public virtual void HandleTileHover(TerrainTile tile) {}
 	/// <summary>
 	/// A BattleState may define this to perform some cleanup on a state transition
 	/// </summary>
@@ -111,14 +121,14 @@ public class BattleController : MonoBehaviour {
     private class PlayerConsiderMove : BattleState {
         Actor _actor;
         NavGraph _navGraph;
-        TileHighlight _highlighter;
+        TileOverlay _highlighter;
 
         public PlayerConsiderMove(Actor actor) {
             _actor = actor;
             var map = GameObject.FindObjectOfType<TileMap>();
             _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
-            _highlighter = GameObject.FindObjectOfType<TileHighlight>();
-            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileHighlight.HighlightType.Move);
+            _highlighter = GameObject.FindObjectOfType<TileOverlay>();
+            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileOverlay.HighlightType.Move);
         }
 
         public override BattleState Update() {
@@ -136,6 +146,15 @@ public class BattleController : MonoBehaviour {
                 return new ExecuteMove(_actor, tile);
             }
             return null;
+        }
+
+        public override void HandleTileHover(TerrainTile tile) {
+            if (_navGraph.TilesInRange.Contains(tile)) {
+                _highlighter.DisplayWalkIcon(_navGraph.CostToTile(tile));
+            }
+            else {
+                _highlighter.ClearIcon();
+            }
         }
 
         public override void OnExit() {
@@ -167,14 +186,14 @@ public class BattleController : MonoBehaviour {
     private class PlayerConsiderAttack : BattleState {
         Actor _actor;
         NavGraph _navGraph;
-        TileHighlight _highlighter;
+        TileOverlay _highlighter;
 
         public PlayerConsiderAttack(Actor actor) {
             _actor = actor;
             var map = GameObject.FindObjectOfType<TileMap>();
             _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
-            _highlighter = GameObject.FindObjectOfType<TileHighlight>();
-            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileHighlight.HighlightType.Attack);
+            _highlighter = GameObject.FindObjectOfType<TileOverlay>();
+            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileOverlay.HighlightType.Attack);
         }
 
         public override BattleState Update() {

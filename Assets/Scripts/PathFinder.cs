@@ -47,6 +47,14 @@ public class NavGraph {
         TilesInRange = tilesInRange.ToArray();
     }
 
+    public int CostToTile(TerrainTile tile) {
+        var idx = TileToIndex(tile);
+        if (idx < _distance.Length) {
+            return _distance[idx];
+        }
+        return int.MaxValue;
+    }
+
     private int TileToIndex(TerrainTile tile) {
         return tile.Row * _tileMap.NumCols + tile.Col;
     }
