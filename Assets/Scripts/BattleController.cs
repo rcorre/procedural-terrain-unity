@@ -110,15 +110,15 @@ public class BattleController : MonoBehaviour {
     /// </summary>
     private class PlayerConsiderMove : BattleState {
         Actor _actor;
-        TerrainTile[] _tilesInRange;
+        NavGraph _navGraph;
         TileHighlight _highlighter;
 
         public PlayerConsiderMove(Actor actor) {
             _actor = actor;
-            var pathFinder = GameObject.FindObjectOfType<PathFinder>();
-            _tilesInRange = pathFinder.TilesInMoveRange(_actor.Row, _actor.Col, _actor.AP);
+            var map = GameObject.FindObjectOfType<TileMap>();
+            _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
             _highlighter = GameObject.FindObjectOfType<TileHighlight>();
-            _highlighter.HighlightTiles(_tilesInRange, TileHighlight.HighlightType.Move);
+            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileHighlight.HighlightType.Move);
         }
 
         public override BattleState Update() {
@@ -132,7 +132,7 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState HandleTileClick(TerrainTile tile) {
-            if (_tilesInRange.Contains(tile)) {
+            if (_navGraph.TilesInRange.Contains(tile)) {
                 return new ExecuteMove(_actor, tile);
             }
             return null;
@@ -166,15 +166,15 @@ public class BattleController : MonoBehaviour {
     // action class has update method called in the ExecuteAction state
     private class PlayerConsiderAttack : BattleState {
         Actor _actor;
-        TerrainTile[] _tilesInRange;
+        NavGraph _navGraph;
         TileHighlight _highlighter;
 
         public PlayerConsiderAttack(Actor actor) {
             _actor = actor;
-            var pathFinder = GameObject.FindObjectOfType<PathFinder>();
-            _tilesInRange = pathFinder.TilesInMoveRange(_actor.Row, _actor.Col, _actor.AP);
+            var map = GameObject.FindObjectOfType<TileMap>();
+            _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
             _highlighter = GameObject.FindObjectOfType<TileHighlight>();
-            _highlighter.HighlightTiles(_tilesInRange, TileHighlight.HighlightType.Attack);
+            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileHighlight.HighlightType.Attack);
         }
 
         public override BattleState Update() {
@@ -188,7 +188,7 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState HandleTileClick(TerrainTile tile) {
-            if (_tilesInRange.Contains(tile) && tile.UnitOnTile) {
+            if (_navGraph.TilesInRange.Contains(tile) && tile.UnitOnTile) {
                 return new ExecuteAttack(_actor, tile);
             }
             return null;

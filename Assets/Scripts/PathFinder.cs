@@ -1,80 +1,50 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-[RequireComponent(typeof(TileMap))]
-public class PathFinder : MonoBehaviour {
-    TileMap _tileMap;
-    // Use this for initialization
-    void Start() {
-        _tileMap = GetComponent<TileMap>();
-    }
+public class NavGraph {
+    public TerrainTile[] TilesInRange { get; private set; }
+    private int[] _distance;
+    private int[] _parent;
+    private TileMap _tileMap;
 
-    public class PathNode {
-	public readonly TerrainTile Tile;
-	public readonly int TotalCost;
-	public readonly PathNode Previous;
-
-        public PathNode(TerrainTile tile, int cost, PathNode prev) {
-            Tile = tile;
-            TotalCost = cost;
-            Previous = prev;
-        }
-
-        public Stack<TerrainTile> PathToNode() {
-            Stack<TerrainTile> nodes = new Stack<TerrainTile>();
-            var node = this;
-            while (node != null) {
-                nodes.Push(node.Tile);
-                node = node.Previous;
-            }
-            return nodes;
-        }
-    }
-
-    public class NavGraph {
-        private struct Node {
-            public TerrainTile tile;
-
-        }
-    }
-
-    public TerrainTile[] TilesInMoveRange(int startRow, int startCol, int ap) {
-        int numNodes = _tileMap.NumRows * _tileMap.NumCols;
-        var distance = new int[numNodes];
+    public NavGraph(TileMap tileMap, int startRow, int startCol, int ap) {
+        _tileMap = tileMap;
+        int numNodes = tileMap.NumRows * tileMap.NumCols;
+        _distance = new int[numNodes];
         for (int i = 0; i < numNodes; i++) {
-            distance[i] = int.MaxValue;
+            _distance[i] = int.MaxValue;
         }
-	int startIndex = TileToIndex(_tileMap.TileAt(startRow, startCol));
-        distance[startIndex] = 0;
+	int startIndex = TileToIndex(tileMap.TileAt(startRow, startCol));
+        _distance[startIndex] = 0;
 
-        var parent = new int[numNodes];
+        var _parent = new int[numNodes];
 
         var queue = new List<int>();
         queue.Add(startIndex);
         while (queue.Count > 0) {
-	    var u = queue.OrderBy(a => distance[a]).First();
+	    var u = queue.OrderBy(a => _distance[a]).First();
 	    queue.Remove(u);
 
 	    var tile = IndexToTile(u);
-	    foreach (var v in _tileMap.TileNeighbors(tile)) {
-		int alt = distance[u] + v.MoveCost;
+	    foreach (var v in tileMap.TileNeighbors(tile)) {
+		int alt = _distance[u] + v.MoveCost;
 		int idx = TileToIndex(v);
-		if (alt < distance[idx]) {
-		    distance[idx] = alt;
-		    parent[idx] = u;
+		if (alt < _distance[idx]) {
+		    _distance[idx] = alt;
+		    _parent[idx] = u;
 		    queue.Add(idx);
 		}
 	    }
         }
+
         List<TerrainTile> tilesInRange = new List<TerrainTile>();
         for (int i = 0; i < numNodes; i++) {
-            if (distance[i] <= ap) {
+            if (_distance[i] <= ap) {
                 tilesInRange.Add(IndexToTile(i));
             }
         }
-        return tilesInRange.ToArray();
+        TilesInRange = tilesInRange.ToArray();
     }
 
     private int TileToIndex(TerrainTile tile) {
