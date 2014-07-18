@@ -126,10 +126,11 @@ public class BattleController : MonoBehaviour {
             }
             else if (_navGraph.TilesInRange.Contains(tile)) {
                 _highlighter.DisplayWalkIcon(_navGraph.CostToTile(tile));
-                _highlighter.HighlightTiles(_navGraph.PathToTile(tile), TileOverlay.HighlightType.Move);
+                _highlighter.DrawPath(_navGraph.PathToTile(tile));
             }
             else {
                 _highlighter.ClearIcon();
+                _highlighter.ClearPath();
             }
         }
 

@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="icons.svg"
+   inkscape:export-filename="C:\Users\erethar\project\procedural_terrain\Assets\Textures\icons.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -65,7 +68,10 @@
      transform="translate(0,-988.36218)">
     <g
        id="g3059"
-       transform="matrix(0.125,0,0,0.125,64,988.36218)">
+       transform="matrix(0.125,0,0,0.125,64,988.36218)"
+       inkscape:export-filename="C:\Users\erethar\project\procedural_terrain\Assets\Textures\melee.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <path
          id="path3025"
          d="M 0,0 H 512 V 512 H 0 z"
@@ -135,7 +141,10 @@
     </g>
     <g
        id="g3111"
-       transform="matrix(0.125,0,0,0.125,0,988.36218)">
+       transform="matrix(0.125,0,0,0.125,0,988.36218)"
+       inkscape:export-filename="C:\Users\erethar\project\procedural_terrain\Assets\Textures\walk.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <path
          id="path3095"
          d="M 0,0 H 512 V 512 H 0 z"
@@ -162,7 +171,10 @@
     </g>
     <g
        id="g3166"
-       transform="matrix(0.12426873,0,0,0.125,128,988.36218)">
+       transform="matrix(0.12426873,0,0,0.125,128,988.36218)"
+       inkscape:export-filename="C:\Users\erethar\project\procedural_terrain\Assets\Textures\bow.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <path
          id="path3144"
          d="M 0,0 H 512 V 512 H 0 z"

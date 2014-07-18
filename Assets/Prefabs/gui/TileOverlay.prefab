@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
+  - 120: {fileID: 12000000}
   m_Layer: 0
   m_Name: TileOverlay
   m_TagString: Untagged
@@ -44,6 +45,38 @@ MonoBehaviour:
   WalkIcon: {fileID: 100000, guid: b10554f5c07e92443af499d98036a206, type: 2}
   MeleeIcon: {fileID: 100000, guid: c8ef20923e6f6214bb639217ffe6aca0, type: 2}
   RangedIcon: {fileID: 100000, guid: b0002d77a60c9254c92447f55262d83b, type: 2}
+  PathElevation: .5
+--- !u!120 &12000000
+LineRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: e179c903d458a9646ac6a11d7ecdb66f, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    startWidth: .200000003
+    endWidth: .200000003
+    m_StartColor:
+      serializedVersion: 2
+      rgba: 4294052113
+    m_EndColor:
+      serializedVersion: 2
+      rgba: 4281085176
+  m_UseWorldSpace: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

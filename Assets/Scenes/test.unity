@@ -123,11 +123,12 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 45579bf4ef9d3dc4cbac2a94265172bd, type: 2}
-  m_PrefabInternal: {fileID: 1416239397}
+  m_PrefabInternal: {fileID: 1372271060}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 457452804}
   - 114: {fileID: 457452803}
+  - 120: {fileID: 457452805}
   m_Layer: 0
   m_Name: TileOverlay
   m_TagString: Untagged
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 45579bf4ef9d3dc4cbac2a94265172bd,
     type: 2}
-  m_PrefabInternal: {fileID: 1416239397}
+  m_PrefabInternal: {fileID: 1372271060}
   m_GameObject: {fileID: 457452802}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -152,11 +153,12 @@ MonoBehaviour:
   WalkIcon: {fileID: 100000, guid: b10554f5c07e92443af499d98036a206, type: 2}
   MeleeIcon: {fileID: 100000, guid: c8ef20923e6f6214bb639217ffe6aca0, type: 2}
   RangedIcon: {fileID: 100000, guid: b0002d77a60c9254c92447f55262d83b, type: 2}
+  PathElevation: .5
 --- !u!4 &457452804
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 45579bf4ef9d3dc4cbac2a94265172bd, type: 2}
-  m_PrefabInternal: {fileID: 1416239397}
+  m_PrefabInternal: {fileID: 1372271060}
   m_GameObject: {fileID: 457452802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.5023575, y: -.0172958374, z: 14.4878387}
@@ -164,6 +166,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!120 &457452805
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 12000000, guid: 45579bf4ef9d3dc4cbac2a94265172bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1372271060}
+  m_GameObject: {fileID: 457452802}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: e179c903d458a9646ac6a11d7ecdb66f, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    startWidth: .200000003
+    endWidth: .200000003
+    m_StartColor:
+      serializedVersion: 2
+      rgba: 4294052113
+    m_EndColor:
+      serializedVersion: 2
+      rgba: 4281085176
+  m_UseWorldSpace: 1
 --- !u!1 &669050724
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +640,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
---- !u!1001 &1416239397
+--- !u!1001 &1372271060
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(LineRenderer))]
 public class TileOverlay : MonoBehaviour {
     public enum HighlightType {
 	Move,
@@ -18,10 +20,16 @@ public class TileOverlay : MonoBehaviour {
     public GameObject MovementOverlay;
     public GameObject AttackOverlay;
     public GameObject WalkIcon, MeleeIcon, RangedIcon;
+    public float PathElevation = 0.5f; // how far above tiles to draw paths
 
     private List<GameObject> _currentOverlay = new List<GameObject>();
     private GameObject _mouseIcon;
     private IconMode _iconMode;
+    private LineRenderer _lineRenderer; // for drawing move paths
+
+    void Start() {
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
 
     public void HighlightTiles(IEnumerable<TerrainTile> tiles, HighlightType type) {
         ClearHighlight();
@@ -31,6 +39,15 @@ public class TileOverlay : MonoBehaviour {
             overlay.transform.position = tile.SurfaceCenter;
             overlay.transform.parent = transform;
             _currentOverlay.Add(overlay);
+        }
+    }
+
+    public void DrawPath(IEnumerable<TerrainTile> tiles) {
+        _lineRenderer.SetVertexCount(tiles.Count());
+        int vertex = 0;
+        foreach (var tile in tiles) {
+            var pos = tile.SurfaceCenter + Vector3.up * PathElevation;
+            _lineRenderer.SetPosition(vertex++, pos);
         }
     }
 
@@ -62,9 +79,14 @@ public class TileOverlay : MonoBehaviour {
         _currentOverlay.Clear();
     }
 
+    public void ClearPath() {
+        _lineRenderer.SetVertexCount(0);
+    }
+
     public void ClearAll() {
         ClearHighlight();
         ClearIcon();
+        ClearPath();
     }
 
     private void SetIcon(IconMode mode) {

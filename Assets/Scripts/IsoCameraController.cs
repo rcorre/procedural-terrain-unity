@@ -23,10 +23,10 @@ public class IsoCameraController : MonoBehaviour {
     void Update() {
 	// keyboard movement
         if (Input.GetKey(KeyCode.W) && transform.position.z < MaxPos.z) {
-            transform.Translate(Vector3.up * Time.deltaTime * ScrollSpeed); // y
+            transform.position += (Vector3.up * Time.deltaTime * ScrollSpeed); // y
         }
         else if (Input.GetKey(KeyCode.S) && transform.position.z > MinPos.z) {
-            transform.Translate(Vector3.down * Time.deltaTime * ScrollSpeed);
+            transform.position += (Vector3.down * Time.deltaTime * ScrollSpeed);
         }
 
         if (Input.GetKey(KeyCode.D) && transform.position.x < MaxPos.x) {
