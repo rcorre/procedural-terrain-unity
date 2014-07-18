@@ -5,9 +5,11 @@ public class IsoCameraController : MonoBehaviour {
     public Vector3 MinPos;
     public Vector3 MaxPos;
     public Vector3 FocalPoint;
-    public float ScrollSpeed = 10f;
-    public float ZoomSpeed = 10f;
-    public float RotateSpeed = 1f;
+    public float MinFov = 5;
+    public float MaxFov = 20;
+    public float ScrollSpeed = 20f;
+    public float ZoomSpeed = 200f;
+    public float RotateSpeed = 100f;
     public float MouseDragSpeed = 0.25f;
 
     private Vector3 _dragStartMousePos;
@@ -34,13 +36,10 @@ public class IsoCameraController : MonoBehaviour {
             transform.Translate(Vector3.left * Time.deltaTime * ScrollSpeed); // x
         }
 
-	// mouse scroll
-        var scroll = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * ZoomSpeed;
-        if (scroll < 0 && transform.position.y > MinPos.y) {
-            transform.Translate(Vector3.forward * scroll); //z
-        }
-        else if (scroll > 0 && transform.position.y < MaxPos.y) {
-            transform.Translate(Vector3.forward * scroll); //z
+	// mouse scroll zoom
+        var scroll = -Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * ZoomSpeed;
+        if (scroll > 0 && camera.fieldOfView < MaxFov || scroll < 0 && camera.fieldOfView > MinFov) {
+            camera.fieldOfView += scroll;
         }
 
 	// rotation
