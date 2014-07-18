@@ -156,7 +156,7 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState Update() {
-            var targetPos = _nodes.Peek().SurfaceCenter + Vector3.up * _actor.ObjectHeight;
+            var targetPos = _nodes.Peek().SurfaceCenter + Vector3.up * _actor.ObjectHeight / 2;
             var currentPos = _actor.transform.position;
 	    var disp = targetPos - currentPos;
 	    var movement = Vector3.ClampMagnitude(disp, _actor.TileMapMoveSpeed * Time.deltaTime);

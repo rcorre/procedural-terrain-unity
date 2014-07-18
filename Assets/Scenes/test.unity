@@ -588,7 +588,7 @@ MonoBehaviour:
   Damage: 40
   AttackRange: 1
   AttackAPCost: 40
-  TileMapMoveSpeed: 5
+  TileMapMoveSpeed: 8
 --- !u!23 &1342055173
 Renderer:
   m_ObjectHideFlags: 0
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   Damage: 40
   AttackRange: 1
   AttackAPCost: 40
-  TileMapMoveSpeed: 5
+  TileMapMoveSpeed: 8
 --- !u!23 &1797640140
 Renderer:
   m_ObjectHideFlags: 0

@@ -43,7 +43,7 @@ public class NavGraph {
 
         List<TerrainTile> tilesInRange = new List<TerrainTile>();
         for (int i = 0; i < numNodes; i++) {
-            if (_distance[i] <= ap) {
+            if (_distance[i] <= ap && i != startIndex) {
                 tilesInRange.Add(IndexToTile(i));
             }
         }
@@ -66,7 +66,7 @@ public class NavGraph {
         else {
             var route = new Stack<TerrainTile>();
             var startIdx = CoordsToIndex(_sourceRow, _sourceCol);
-	    while (_parent[idx] != startIdx) {
+	    while (idx != startIdx) {
 		route.Push(IndexToTile(idx));
 		idx = _parent[idx];
 	    }
