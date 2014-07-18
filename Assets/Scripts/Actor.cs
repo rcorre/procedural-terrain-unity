@@ -11,7 +11,16 @@ public class Actor : BasicUnit {
     public int AttackRange = 1;
     public int AttackAPCost = 40;
 
-    public int AP { get; private set; }
+    // how fast unit moves along tilemap. does not affect game mechanics
+    public float TileMapMoveSpeed = 5.0f;
+
+    private int _ap;
+    public int AP {
+        get { return _ap; }
+        set {
+            _ap = Mathf.Clamp(value, 0, MaxAp);
+        }
+    }
 
     // Use this for initialization
     void Start() {

@@ -29,18 +29,23 @@ public class BasicUnit : MonoBehaviour {
     public int Row { get { return CurrentTile.Row; } }
     public int Col { get { return CurrentTile.Col; } }
 
+    public float ObjectHeight {
+        get {
+            // find the bounds of the object using its mesh filter
+            MeshFilter mf = GetComponent<MeshFilter>();
+            Vector3 objSize = mf.sharedMesh.bounds.size;
+            Vector3 objScale = transform.localScale;
+            return objSize.y * objScale.y;
+        }
+    }
+
     void Start() {
         Health = MaxHealth;
     }
 
     private void CenterOnTile(TerrainTile tile) {
-	// find the bounds of the object using its mesh filter
-        MeshFilter mf = GetComponent<MeshFilter>();
-        Vector3 objSize = mf.sharedMesh.bounds.size;
-        Vector3 objScale = transform.localScale;
-        float height = objSize.y * objScale.y;
-	// position the base on the surface of the tile
-        transform.position = tile.SurfaceCenter + new Vector3(0, height / 2, 0);
+        // position the base on the surface of the tile
+        transform.position = tile.SurfaceCenter + new Vector3(0, ObjectHeight / 2, 0);
     }
 
     public virtual int DealDamage(int amount) {

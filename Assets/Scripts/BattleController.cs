@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Collections.Generic;
 
 public class BattleController : MonoBehaviour {
     public float PhaseTime = 1.0f; // time in seconds to wait between phases
@@ -107,6 +108,7 @@ public class BattleController : MonoBehaviour {
             var map = GameObject.FindObjectOfType<TileMap>();
             _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
             _highlighter = GameObject.FindObjectOfType<TileOverlay>();
+            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileOverlay.HighlightType.Move);
         }
 
         public override BattleState Update() {
@@ -115,7 +117,7 @@ public class BattleController : MonoBehaviour {
 
         public override BattleState HandleTileClick(TerrainTile tile) {
             if (_navGraph.TilesInRange.Contains(tile)) {
-                return new ExecuteMove(_actor, tile);
+                return new ExecuteMove(_actor, _navGraph.PathToTile(tile), _navGraph.CostToTile(tile));
             }
             return null;
         }
@@ -124,7 +126,7 @@ public class BattleController : MonoBehaviour {
             if (tile.UnitOnTile && tile.UnitOnTile.IsAttackableBy(_actor)) {
                 _highlighter.DisplayMeleeIcon(_navGraph.CostToTile(tile));
             }
-            else if (_navGraph.TilesInRange.Contains(tile)) {
+            else if (_navGraph.TilesInRange.Contains(tile) && tile != _actor.CurrentTile) {
                 _highlighter.DisplayWalkIcon(_navGraph.CostToTile(tile));
                 _highlighter.DrawPath(_navGraph.PathToTile(tile));
             }
@@ -140,105 +142,35 @@ public class BattleController : MonoBehaviour {
     }
 
     /// <summary>
-    /// A player has selected to move a unit but not which tile to move it to
-    /// </summary>
-    private class PlayerConsiderMove : BattleState {
-        Actor _actor;
-        NavGraph _navGraph;
-        TileOverlay _highlighter;
-
-        public PlayerConsiderMove(Actor actor) {
-            _actor = actor;
-            var map = GameObject.FindObjectOfType<TileMap>();
-            _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
-            _highlighter = GameObject.FindObjectOfType<TileOverlay>();
-            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileOverlay.HighlightType.Move);
-        }
-
-        public override BattleState Update() {
-            if (Input.GetKeyUp(KeyCode.M)) { // stop movement selection
-                return new PlayerReady(_actor);
-            }
-            if (Input.GetKeyUp(KeyCode.N)) { // stop movement selection
-                return new PlayerConsiderAttack(_actor);
-            }
-            return null;
-        }
-
-        public override BattleState HandleTileClick(TerrainTile tile) {
-            if (_navGraph.TilesInRange.Contains(tile)) {
-                return new ExecuteMove(_actor, tile);
-            }
-            return null;
-        }
-
-        public override void HandleTileHover(TerrainTile tile) {
-            if (_navGraph.TilesInRange.Contains(tile)) {
-                _highlighter.DisplayWalkIcon(_navGraph.CostToTile(tile));
-            }
-            else {
-                _highlighter.ClearIcon();
-            }
-        }
-
-        public override void OnExit() {
-            _highlighter.ClearAll();
-        }
-    }
-
-    /// <summary>
     /// A unit is in the process of moving along the tilemap
     /// </summary>
     private class ExecuteMove : BattleState {
+        const float CloseEnough = 0.01f;
         Actor _actor;
-        TerrainTile _destination;
-        public ExecuteMove(Actor unitToMove, TerrainTile destination) {
+        Stack<TerrainTile> _nodes;
+
+        public ExecuteMove(Actor unitToMove, Stack<TerrainTile> nodes, int moveCost) {
             _actor = unitToMove;
-            _destination = destination;
+            _actor.AP -= moveCost;
+            _nodes = nodes;
         }
 
         public override BattleState Update() {
-            _actor.CurrentTile = _destination;  // TODO: animate movement
-            return new PlayerReady(_actor);
-        }
-    }
-
-    // TODO : use one class for considering all actions
-    // use an enum to identify action type (attack vs move vs ect.)
-    // use an Action class to determine range and pathfinding
-    // action class has update method called in the ExecuteAction state
-    private class PlayerConsiderAttack : BattleState {
-        Actor _actor;
-        NavGraph _navGraph;
-        TileOverlay _highlighter;
-
-        public PlayerConsiderAttack(Actor actor) {
-            _actor = actor;
-            var map = GameObject.FindObjectOfType<TileMap>();
-            _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
-            _highlighter = GameObject.FindObjectOfType<TileOverlay>();
-            _highlighter.HighlightTiles(_navGraph.TilesInRange, TileOverlay.HighlightType.Attack);
-        }
-
-        public override BattleState Update() {
-            if (Input.GetKeyUp(KeyCode.N)) { // stop movement selection
-                return new PlayerReady(_actor);
+            var targetPos = _nodes.Peek().SurfaceCenter + Vector3.up * _actor.ObjectHeight;
+            var currentPos = _actor.transform.position;
+	    var disp = targetPos - currentPos;
+	    var movement = Vector3.ClampMagnitude(disp, _actor.TileMapMoveSpeed * Time.deltaTime);
+	    _actor.transform.position += movement;
+	    // check new position and figure out if actor is close enough
+            currentPos = _actor.transform.position;
+            if (Vector3.Distance(currentPos, targetPos) < CloseEnough) { // reached tile
+                var tile = _nodes.Pop();
+                if (_nodes.Count == 0) { // reached destination
+                    _actor.CurrentTile = tile;
+                    return new PlayerReady(_actor);
+                }
             }
-            if (Input.GetKeyUp(KeyCode.M)) { // stop movement selection
-                return new PlayerConsiderMove(_actor);
-            }
-            return null;
-        }
-
-        public override BattleState HandleTileClick(TerrainTile tile) {
-            if (_navGraph.TilesInRange.Contains(tile) && tile.UnitOnTile) {
-                return new ExecuteAttack(_actor, tile);
-            }
-            return null;
-        }
-
-        public override void OnExit() {
-            _highlighter.ClearAll();
+	    return null;
         }
     }
 
