@@ -12,6 +12,7 @@ public class TileMapMouse : MonoBehaviour {
 
     // check every tile in the tilemap for a collision with a ray sent from the mouse position relative to the camera
     // place the selector on the closest tile
+    // TODO: consider units on map and prioritize selection of them
     void Update() {
         TerrainTile closestTileUnderMouse = null;
         float minDistance = float.MaxValue;

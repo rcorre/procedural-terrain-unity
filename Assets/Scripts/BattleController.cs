@@ -99,19 +99,42 @@ public class BattleController : MonoBehaviour {
     /// </summary>
     private class PlayerReady : BattleState {
         Actor _actor;
+        NavGraph _navGraph;
+        TileOverlay _highlighter;
 
         public PlayerReady(Actor actor) {
             _actor = actor;
+            var map = GameObject.FindObjectOfType<TileMap>();
+            _navGraph = new NavGraph(map, _actor.Row, _actor.Col, _actor.AP);
+            _highlighter = GameObject.FindObjectOfType<TileOverlay>();
         }
 
         public override BattleState Update() {
-            if (Input.GetKeyUp(KeyCode.M)) {
-                return new PlayerConsiderMove(_actor);
-            }
-            else if (Input.GetKeyUp(KeyCode.N)) {
-                return new PlayerConsiderAttack(_actor);
+            return null;
+        }
+
+        public override BattleState HandleTileClick(TerrainTile tile) {
+            if (_navGraph.TilesInRange.Contains(tile)) {
+                return new ExecuteMove(_actor, tile);
             }
             return null;
+        }
+
+        public override void HandleTileHover(TerrainTile tile) {
+            if (tile.UnitOnTile && tile.UnitOnTile.IsAttackableBy(_actor)) {
+                _highlighter.DisplayMeleeIcon(_navGraph.CostToTile(tile));
+            }
+            else if (_navGraph.TilesInRange.Contains(tile)) {
+                _highlighter.DisplayWalkIcon(_navGraph.CostToTile(tile));
+                _highlighter.HighlightTiles(_navGraph.PathToTile(tile), TileOverlay.HighlightType.Move);
+            }
+            else {
+                _highlighter.ClearIcon();
+            }
+        }
+
+        public override void OnExit() {
+            _highlighter.ClearAll();
         }
     }
 
@@ -158,7 +181,7 @@ public class BattleController : MonoBehaviour {
         }
 
         public override void OnExit() {
-            _highlighter.ClearOverlay();
+            _highlighter.ClearAll();
         }
     }
 
@@ -214,7 +237,7 @@ public class BattleController : MonoBehaviour {
         }
 
         public override void OnExit() {
-            _highlighter.ClearOverlay();
+            _highlighter.ClearAll();
         }
     }
 

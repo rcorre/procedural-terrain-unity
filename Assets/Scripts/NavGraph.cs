@@ -6,9 +6,12 @@ public class NavGraph {
     public TerrainTile[] TilesInRange { get; private set; }
     private int[] _distance;
     private int[] _parent;
+    private int _sourceRow, _sourceCol;
     private TileMap _tileMap;
 
     public NavGraph(TileMap tileMap, int startRow, int startCol, int ap) {
+        _sourceRow = startRow;
+        _sourceCol = startCol;
         _tileMap = tileMap;
         int numNodes = tileMap.NumRows * tileMap.NumCols;
         _distance = new int[numNodes];
@@ -18,7 +21,7 @@ public class NavGraph {
 	int startIndex = TileToIndex(tileMap.TileAt(startRow, startCol));
         _distance[startIndex] = 0;
 
-        var _parent = new int[numNodes];
+        _parent = new int[numNodes];
 
         var queue = new List<int>();
         queue.Add(startIndex);
@@ -55,8 +58,28 @@ public class NavGraph {
         return int.MaxValue;
     }
 
+    public Stack<TerrainTile> PathToTile(TerrainTile endTile) {
+        int idx = TileToIndex(endTile);
+        if (_distance[idx] == int.MaxValue) {
+            return null;
+        }
+        else {
+            var route = new Stack<TerrainTile>();
+            var startIdx = CoordsToIndex(_sourceRow, _sourceCol);
+	    while (_parent[idx] != startIdx) {
+		route.Push(IndexToTile(idx));
+		idx = _parent[idx];
+	    }
+	    return route;
+        }
+    }
+
     private int TileToIndex(TerrainTile tile) {
-        return tile.Row * _tileMap.NumCols + tile.Col;
+        return CoordsToIndex(tile.Row, tile.Col);
+    }
+
+    private int CoordsToIndex(int row, int col) {
+        return row * _tileMap.NumCols + col;
     }
 
     private TerrainTile IndexToTile(int idx) {

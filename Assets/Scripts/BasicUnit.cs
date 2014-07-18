@@ -2,6 +2,14 @@
 using System.Collections;
 
 public class BasicUnit : MonoBehaviour {
+    public enum Team {
+	Player,
+	Enemy,
+	Neutral
+    }
+
+    public Team UnitTeam = Team.Neutral;
+
     // editable
     public bool Impassable = true;
     public int MaxHealth = 100;
@@ -42,5 +50,9 @@ public class BasicUnit : MonoBehaviour {
             Destroy(gameObject); // TODO: handle this better - could cause issues instantly destroying
         }
         return result;
+    }
+
+    public bool IsAttackableBy(BasicUnit other) {
+        return UnitTeam == Team.Neutral || (UnitTeam != other.UnitTeam);
     }
 }

@@ -544,10 +544,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32dcdfdfb4af404a818261822df69ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitTeam: 2
   Impassable: 0
   MaxHealth: 100
   DamageResistance: 10
-  ActorTeam: 0
   StartRow: 10
   StartCol: 10
   Initiative: 50
@@ -1017,10 +1017,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32dcdfdfb4af404a818261822df69ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitTeam: 2
   Impassable: 0
   MaxHealth: 100
   DamageResistance: 10
-  ActorTeam: 1
   StartRow: 12
   StartCol: 12
   Initiative: 30
@@ -1258,8 +1258,10 @@ MonoBehaviour:
   MinPos: {x: -20, y: 10, z: -60}
   MaxPos: {x: 50, y: 60, z: 60}
   FocalPoint: {x: 15, y: 0, z: 15}
+  MinFov: 5
+  MaxFov: 20
   ScrollSpeed: 25
-  ZoomSpeed: 1500
+  ZoomSpeed: 300
   RotateSpeed: 100
   MouseDragSpeed: .200000003
 --- !u!1 &2031404043

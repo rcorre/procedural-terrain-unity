@@ -14,9 +14,13 @@ public class TileSelector : MonoBehaviour {
         get { return _tileUnderMouse; }
         set {
             if (value) { // place tile selector on a tile
+                var tileChanged = _tileUnderMouse != value;
                 gameObject.SetActive(true);
                 _tileUnderMouse = value;
                 transform.position = _tileUnderMouse.SurfaceCenter;
+                if (tileChanged) {
+                    _controller.HandleTileHover(TileUnderMouse);
+                }
             }
             else { // indicates no tile is under mouse -- hide selector
                 gameObject.SetActive(false);
@@ -32,11 +36,8 @@ public class TileSelector : MonoBehaviour {
     }
 
     void Update() {
-        if (_tileUnderMouse) {
-            _controller.HandleTileHover(TileUnderMouse);
-            if (Input.GetMouseButtonUp(0)) {
-                _controller.HandleTileClick(TileUnderMouse);
-            }
+        if (_tileUnderMouse && Input.GetMouseButtonUp(0)) {
+            _controller.HandleTileClick(TileUnderMouse);
         }
     }
 }
