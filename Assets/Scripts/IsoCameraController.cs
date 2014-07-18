@@ -8,6 +8,9 @@ public class IsoCameraController : MonoBehaviour {
     public float ScrollSpeed = 10f;
     public float ZoomSpeed = 10f;
     public float RotateSpeed = 1f;
+    public float MouseDragSpeed = 0.25f;
+
+    private Vector3 _dragStartMousePos;
 
     // Use this for initialization
     void Start() {
@@ -46,6 +49,17 @@ public class IsoCameraController : MonoBehaviour {
         }
         else if (Input.GetKey(KeyCode.Q)) {
             transform.RotateAround(FocalPoint, Vector3.up, -RotateSpeed * Time.deltaTime);
+        }
+
+	// right click rotation
+        if (Input.GetMouseButtonDown(1)) {
+            _dragStartMousePos = Input.mousePosition;
+        }
+        if (Input.GetMouseButton(1)) {
+            var mouseMovement = Input.mousePosition - _dragStartMousePos;
+            _dragStartMousePos = Input.mousePosition;
+	    // mouse rotation about z
+            transform.RotateAround(FocalPoint, Vector3.up, RotateSpeed * Time.deltaTime * mouseMovement.x * MouseDragSpeed);
         }
     }
 }

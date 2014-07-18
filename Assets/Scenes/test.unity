@@ -1158,8 +1158,9 @@ MonoBehaviour:
   MaxPos: {x: 50, y: 60, z: 60}
   FocalPoint: {x: 15, y: 0, z: 15}
   ScrollSpeed: 25
-  ZoomSpeed: 1000
+  ZoomSpeed: 1500
   RotateSpeed: 100
+  MouseDragSpeed: .200000003
 --- !u!1 &2031404043
 GameObject:
   m_ObjectHideFlags: 0
