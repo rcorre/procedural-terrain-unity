@@ -2,8 +2,15 @@
 using System.Collections;
 
 public class Actor : BasicUnit {
+    public enum Team {
+	Player,
+	Enemy,
+	Neutral
+    }
+
     public const int MaxAp = 100;
 
+    public Team ActorTeam;
     public int StartRow, StartCol;
     // stats -- TODO: can these be settable only in the editor? custom inspector maybe?
     public int Initiative = 20;

@@ -11,6 +11,35 @@ public class PathFinder : MonoBehaviour {
         _tileMap = GetComponent<TileMap>();
     }
 
+    public class PathNode {
+	public readonly TerrainTile Tile;
+	public readonly int TotalCost;
+	public readonly PathNode Previous;
+
+        public PathNode(TerrainTile tile, int cost, PathNode prev) {
+            Tile = tile;
+            TotalCost = cost;
+            Previous = prev;
+        }
+
+        public Stack<TerrainTile> PathToNode() {
+            Stack<TerrainTile> nodes = new Stack<TerrainTile>();
+            var node = this;
+            while (node != null) {
+                nodes.Push(node.Tile);
+                node = node.Previous;
+            }
+            return nodes;
+        }
+    }
+
+    public class NavGraph {
+        private struct Node {
+            public TerrainTile tile;
+
+        }
+    }
+
     public TerrainTile[] TilesInMoveRange(int startRow, int startCol, int ap) {
         int numNodes = _tileMap.NumRows * _tileMap.NumCols;
         var distance = new int[numNodes];
