@@ -128,7 +128,7 @@ public class BattleController : MonoBehaviour {
 
         public override void HandleTileHover(TerrainTile tile) {
             if (tile.UnitOnTile && tile.UnitOnTile.IsAttackableBy(_actor)) {
-                _highlighter.DisplayMeleeIcon(_navGraph.CostToTile(tile));
+                _highlighter.DisplayMeleeIcon(_actor.AttackAPCost, _actor.Damage);
             }
             else if (_navGraph.TilesInRange.Contains(tile) && tile != _actor.CurrentTile) {
                 _highlighter.DisplayWalkIcon(_navGraph.CostToTile(tile));

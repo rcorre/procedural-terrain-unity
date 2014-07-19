@@ -56,9 +56,9 @@ public class TileOverlay : MonoBehaviour {
         _mouseIcon.guiText.text = moveCost.ToString();
     }
 
-    public void DisplayMeleeIcon(int moveCost) {
+    public void DisplayMeleeIcon(int moveCost, int damage) {
         SetIcon(IconMode.Melee);
-        _mouseIcon.guiText.text = moveCost.ToString();
+        _mouseIcon.guiText.text = "Cost: " + moveCost + "\nDamage:" + damage;
     }
 
     void Update() {
