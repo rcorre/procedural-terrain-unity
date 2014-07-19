@@ -116,7 +116,11 @@ public class BattleController : MonoBehaviour {
         }
 
         public override BattleState HandleTileClick(TerrainTile tile) {
-            if (_navGraph.TilesInRange.Contains(tile)) {
+            if (tile.UnitOnTile && tile.UnitOnTile.IsAttackableBy(_actor) && tile.AdjacentTo(_actor.CurrentTile)) {
+                return new ExecuteAttack(_actor, tile);
+            }
+
+            else if (_navGraph.TilesInRange.Contains(tile)) {
                 return new ExecuteMove(_actor, _navGraph.PathToTile(tile), _navGraph.CostToTile(tile));
             }
             return null;
@@ -187,9 +191,15 @@ public class BattleController : MonoBehaviour {
         public override BattleState Update() {
             var targetUnit = _targetTile.UnitOnTile;
             var position = targetUnit.transform.position;
-            var damageDealt = targetUnit.DealDamage(_attacker.Damage);
             var textManager = FindObjectOfType<BattleTextManager>();
-            textManager.SpawnText(damageDealt, BattleTextManager.TextType.Damage, position);
+            if (_attacker.AP < _attacker.AttackAPCost) {
+                textManager.SpawnText("Not enough AP", BattleTextManager.TextType.Damage, position);
+            }
+            else {
+                var damageDealt = targetUnit.DealDamage(_attacker.Damage);
+                textManager.SpawnText(damageDealt, BattleTextManager.TextType.Damage, position);
+                _attacker.AP -= _attacker.AttackAPCost;
+            }
             return new PlayerReady(_attacker);
         }
     }

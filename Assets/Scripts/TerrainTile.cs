@@ -22,6 +22,10 @@ public class TerrainTile : MonoBehaviour {
         }
     }
 
+    public bool AdjacentTo(TerrainTile other) {
+        return Mathf.Abs(other.Row - Row) == 1 || Mathf.Abs(other.Col - Col) == 1;
+    }
+
     float _sizeX, _sizeY, _sizeZ;
 
     public void Initialize() {
